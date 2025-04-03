@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>远程桌面连接操作指南</title>
+    <style>
+        body {
+            background: linear-gradient(to bottom, #f0f4f8, #d9e2ec);
+            font-family: 'Arial', sans-serif;
+            color: #333;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+        }
+        h1 {
+            font-size: 36px;
+            color: #2c3e50;
+            text-align: center;
+            margin-bottom: 30px;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 10px;
+        }
+        h2 {
+            font-size: 24px;
+            color: #2980b9;
+            margin-top: 20px;
+        }
+        .section {
+            background: #fff;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            margin: 20px auto;
+            padding: 20px;
+            max-width: 800px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        ul {
+            list-style-type: disc;
+            padding-left: 20px;
+        }
+        li {
+            margin: 10px 0;
+            font-size: 16px;
+        }
+        code {
+            background: #f4f4f4;
+            color: #d32f2f;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+        }
+        .note {
+            color: #7f8c8d;
+            font-style: italic;
+            margin-top: 10px;
+        }
+        .highlight {
+            background: #e8f1f9;
+            padding: 10px;
+            border-left: 4px solid #3498db;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+    <h1>远程桌面连接操作指南</h1>
+    <div class="section">
+        <h2>1. Windows 系统远程连接 Windows 系统</h2>
+        <ul>
+            <li><strong>启用远程桌面功能</strong>：打开“系统属性” -> “远程设置”，选择“允许远程连接到此计算机”。建议取消“仅允许使用网络级别身份验证的远程桌面连接”选项，以兼容旧系统（如 Windows XP）。同时，关闭自动休眠功能，并确保 Windows 防火墙允许“远程桌面”通过（适用于专用和公用网络）。</li>
+            <li><strong>启动远程连接</strong>：按 <code>Win+R</code>，输入 <code>mstsc</code> 并回车。在弹出的窗口中输入目标计算机的 IP 地址，点击“连接”，然后输入用户名和密码。可勾选“保存凭据”以便后续使用。</li>
+            <li><strong>高级配置（可选）</strong>：在“显示”选项中调整分辨率或全屏时的连接栏显示；在“本地资源”中启用剪贴板共享或映射本地驱动器；默认端口为 3389，可通过修改注册表更改。</li>
+            <li><strong>常用快捷键</strong>：<code>CTRL+ALT+END</code> 发送 <code>CTRL+ALT+DELETE</code> 至远程计算机；<code>CTRL+ALT+HOME</code> 显示连接栏（全屏模式下，Windows 7 以下不支持）。</li>
+            <li><strong>特殊情况</strong>：对于 Windows XP，连接时可直接选择用户登录，需勾选“允许保存凭据”；对于 Windows 8 及以上使用 Microsoft 账户时，若凭据无效，可尝试输入 <code>计算机名\用户名</code> 或 <code>工作组\用户名</code>。</li>
+        </ul>
+    </div>
+
+    <div class="section">
+        <h2>2. Linux 系统远程连接 Windows 系统</h2>
+        <ul>
+            <li><strong>安装 rdesktop</strong>：以 Ubuntu 为例，执行命令 <code>sudo apt-get install rdesktop</code> 安装远程桌面工具。</li>
+            <li><strong>连接命令</strong>：
+                <div class="highlight">
+                    <code>rdesktop -a 16 -u [username] -p [password] -f -r disk:name=/home/fz -r clipboard:PRIMARYCLIPBOARD -r sound:local [ipaddress]</code>
+                </div>
+                参数说明： <code>-a 16</code> 表示 16 位色深；<code>-f</code> 表示全屏模式（或用 <code>-g 1920x1080</code> 指定分辨率）；<code>-r disk:name=/home/fz</code> 映射本地目录；<code>-r clipboard</code> 启用剪贴板共享；<code>-r sound:local</code> 将声音输出至本地；<code>[ipaddress]</code> 为目标 IP 地址。
+            </li>
+            <li><strong>快捷键</strong>：<code>CTRL+ALT+ENTER</code> 切换全屏/窗口模式；<code>CTRL+ALT+DELETE</code> 直接发送至远程计算机。</li>
+            <li><strong>替代工具</strong>：可使用 Ubuntu 自带的 <code>Remmina</code>，支持 RDP 协议，提供图形化操作界面。</li>
+        </ul>
+    </div>
+
+    <div class="section">
+        <h2>3. Android 系统远程连接 Windows 系统</h2>
+        <ul>
+            <li><strong>安装应用</strong>：在应用商店搜索并下载“Microsoft Remote Desktop”应用。</li>
+            <li><strong>建立连接</strong>：打开应用，输入目标计算机的 IP 地址、用户名和密码，点击“连接”。支持触屏操作，配置简便。</li>
+        </ul>
+    </div>
+
+    <div class="section">
+        <h2>4. OS X 系统远程连接 Windows 系统</h2>
+        <ul>
+            <li><strong>使用官方应用</strong>：从美区 App Store 下载“Microsoft Remote Desktop”，安装后输入目标 IP 地址、用户名和密码即可连接。注意：旧版可能需调整远程计算机的组策略，新版无此限制。</li>
+            <li><strong>使用 rdesktop</strong>：通过 Homebrew 安装，命令为 <code>brew install rdesktop</code>，然后使用类似 <code>rdesktop -a 16 -u [username] -p [password] -f [ipaddress]</code> 的格式连接。</li>
+            <li><strong>替代方法</strong>：执行 <code>brew cask install microsoft-remote-desktop-beta</code> 安装测试版，无需 Apple ID，推荐使用。</li>
+        </ul>
+    </div>
+
+    <div class="section">
+        <h2>补充说明</h2>
+        <ul>
+            <li><strong>端口设置</strong>：默认端口为 3389，若修改需在 IP 后添加 <code>:port</code>，如 <code>192.168.1.1:3390</code>。</li>
+            <li><strong>IPv6 地址</strong>：需使用中括号，例如 <code>[2001:da8:214:1086:747c:abcd:efgh:1c6a]:22</code>。</li>
+            <li><strong>非公网 IP</strong>：可通过 VPN 或内网穿透工具（如 frp）实现连接。</li>
+        </ul>
+        <p class="note">请确保网络配置正确，以避免连接失败。</p>
+    </div>
+</body>
+</html>
