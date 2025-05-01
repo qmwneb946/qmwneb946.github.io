@@ -1,226 +1,528 @@
 <!DOCTYPE html>
-<html lang="zh-CN" data-theme="light">
+<html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="您的数字导航助手">
-    <title>资源导航中心</title>
-    
-    <!-- 性能优化 -->
-    <link rel="preconnect" href="https://fonts.googleapis.com"> 
-    <link rel="preconnect" href="https://fonts.gstatic.com"  crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=Roboto+Mono:wght@300&display=swap"  rel="stylesheet">
-    <link rel="icon" href="https://example.com/favicon.ico"  type="image/x-icon">
-    
-    <!-- 渐进增强样式 -->
+    <title>我的导航</title>
+    <link rel="icon" href="./favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="./favicon.ico" type="image/x-icon">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600&family=Quicksand:wght@500&family=Noto Sans SC:wght@400&display=swap" rel="stylesheet">
     <style>
-    :root {
-        --gradient-1: #f8f9fa;
-        --gradient-2: #e9ecef;
-        --primary-accent: #ff6b6b;
-        --card-bg: linear-gradient(145deg, #2d3436 0%, #1d1d1d 100%);
-        --text-primary: #333;
-        --text-secondary: #666;
-        --surface-blur: blur(10px);
-    }
- 
-    /* 基础重置 */
-    *, *::before, *::after {
-        box-sizing: border-box;
-        margin: 0;
-        padding: 0;
-    }
- 
-    body {
-        font-family: 'Inter', system-ui, -apple-system, sans-serif;
-        background: linear-gradient(135deg, var(--gradient-1), var(--gradient-2));
-        background-size: 200% 200%;
-        color: var(--text-primary);
-        line-height: 1.6;
-        min-height: 100vh;
-        display: grid;
-        place-items: center;
-        padding: 1rem;
-        animation: gradientShift 15s ease infinite;
-    }
- 
-    /* 动态时间样式 */
-    .time-container {
-        position: fixed;
-        top: 1.5rem;
-        right: 2rem;
-        background: rgba(255, 255, 255, 0.9);
-        padding: 0.5rem 1rem;
-        border-radius: 8px;
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-        font-family: 'Roboto Mono', monospace;
-        font-size: 0.9rem;
-        color: var(--text-secondary);
-    }
- 
-    /* 增强容器 */
-    .container {
-        max-width: 88vw;
-        padding: 2.5rem;
-        background: rgba(255, 255, 255, 0.98);
-        backdrop-filter: var(--surface-blur);
-        border-radius: 20px;
-        box-shadow: 0 12px 40px rgba(0, 0, 0, 0.08);
-        transform: translateY(0);
-        opacity: 1;
-        transition: transform 0.3s ease, opacity 0.3s ease;
-    }
- 
-    /* 动态标题系统 */
-    h1.error-code  {
-        font-size: clamp(3rem, 10vw, 5rem);
-        line-height: 1.2;
-        margin-bottom: 1.5rem;
-        position: relative;
-        color: var(--primary-accent);
-        text-shadow: 0 4px 12px rgba(255, 107, 107, 0.25);
-    }
- 
-    /* 服务导航矩阵 */
-    .service-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-        gap: 1.25rem;
-        margin: 2rem 0;
-    }
- 
-    /* 三维卡片设计 */
-    .service-card {
-        --card-padding: 1.5rem;
-        position: relative;
-        background: var(--card-bg);
-        padding: var(--card-padding);
-        border-radius: 12px;
-        color: white;
-        text-decoration: none;
-        transform-style: preserve-3d;
-        transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
-    }
- 
-    /* 卡片悬停动效 */
-    .service-card:hover {
-        transform: translateY(-6px) rotateX(5deg) rotateY(2deg) scale(1.03);
-        box-shadow: 0 12px 30px rgba(255, 107, 107, 0.3);
-    }
- 
-    /* 响应式调整 */
-    @media (max-width: 640px) {
-        .container {
-            padding: 1.5rem;
-            border-radius: 16px;
-        }
-        
-        .service-grid {
-            grid-template-columns: 1fr;
-        }
-    }
- 
-    /* 动画系统 */
-    @keyframes gradientShift {
-        0% { background-position: 0% 50% }
-        50% { background-position: 100% 50% }
-        100% { background-position: 0% 50% }
-    }
- 
-    @media (prefers-reduced-motion: reduce) {
-        * {
-            animation-duration: 0.01ms !important;
-            transition-duration: 0.01ms !important;
-        }
-    }
+:root {
+    --font-title: Poppins;
+    --font-weight-title: 600;
+    --font-subtitle: Quicksand;
+    --font-weight-subtitle: 500;
+    --font-body: Noto Sans SC;
+    --font-weight-body: 400;
+}
     </style>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
-<body>
-    <div class="time-container" id="liveTime">2025年02月19日 18:35 周三</div>
- 
-    <main class="container">
-        <h1 class="error-code" aria-label="主页面">主页面</h1>
-        
-        <section class="error-message" aria-labelledby="errorDescription">
-            <h2 id="errorDescription" class="sr-only">欢迎来到 qmwneb946.dpdns.org </h2>
-            <p>当前访问路径已进入量子隧穿状态，建议通过以下服务节点继续探索：</p>
-        </section>
- 
-        <nav class="service-grid" aria-label="服务导航">
-            <a href="https://fast.qmwneb946.dpdns.org"  class="service-card" target="_blank" rel="noopener" aria-label="">
-                <h3>文件加速服务</h3>
-                <p class="card-description">任意文件 / 网址加速， 由 CloudFlare 驱动。</p>
-            </a>
-             <a href="https://greenhublicence.qmwneb946.dpdns.org"  class="service-card" target="_blank" rel="noopener" aria-label="">
-                <h3>Greenhub 许可证</h3>
-                <p class="card-description">Greenhub 许可证，每 5 分钟更新。</p>
-            </a>
-            <a href="https://graph.qmwneb946.dpdns.org"  class="service-card" target="_blank" rel="noopener" aria-label="">
-                <h3>图论编辑器</h3>
-                <p class="card-description">Code by anAcc22.</p>
-            </a>
-            <a href="https://github.qmwneb946.dpdns.org"  class="service-card" target="_blank" rel="noopener" aria-label="">
-                <h3>GitHub 镜像站</h3>
-                <p class="card-description">GitHub 加速。</p>
-            </a>
-            <a href="https://vpn.qmwneb946.dpdns.org"  class="service-card" target="_blank" rel="noopener" aria-label="">
-                <h3>VPN</h3>
-                <p class="card-description">安全 VPN 通道。</p>
-            </a>
-            <a href="https://pan.qmwneb946.dpdns.org"  class="service-card" target="_blank" rel="noopener" aria-label="">
-                <h3>qmwneb 网盘</h3>
-                <p class="card-description">存储 + UI。</p>
-            </a>
-            <a href="https://files.qmwneb946.dpdns.org"  class="service-card" target="_blank" rel="noopener" aria-label="">
-                <h3>信息奥赛课件源</h3>
-                <p class="card-description">仅内网下载。</p>
-            </a>
-            <a href="https://d.qmwneb946.dpdns.org"  class="service-card" target="_blank" rel="noopener" aria-label="">
-                <h3>备忘录 || 讨论</h3>
-                <p class="card-description">由 giscus 驱动。</p>
-            </a>
-            <a href="https://daily.qmwneb946.dpdns.org"  class="service-card" target="_blank" rel="noopener" aria-label="">
-                <h3>CodeForces 每日提交记录查看</h3>
-                <p class="card-description">每日提交记录查看， CodeForces API 支持。</p>
-            </a>
-            <a href="https://pc.qmwneb946.dpdns.org"  class="service-card" target="_blank" rel="noopener" aria-label="">
-                <h3>美国电脑</h3>
-                <p class="card-description">低价美国电脑</p>
-            </a>
+<body class="loading">
+    <div class="layout">
+        <!-- 移动端按钮 -->
+        <div class="mobile-buttons">
+            <button class="menu-toggle" aria-label="切换菜单">
+                <i class="fas fa-bars"></i>
+            </button>
+            <button class="search-toggle" aria-label="切换搜索">
+                <i class="fas fa-search"></i>
+            </button>
+        </div>
+
+        <!-- 遮罩层 -->
+        <div class="overlay"></div>
+
+        <!-- 左侧导航 -->
+        <nav class="sidebar">
+            <div class="logo">
+                <h1>导航站</h1>
+            </div>
+            
+            <div class="sidebar-content">
+                <div class="nav-section">
+                    
+                <a href="#" class="nav-item active" data-page="home">
+                    <div class="icon-container">
+                        <i class="fas fa-home"></i>
+                    </div>
+                    <span class="nav-text">首页</span>
+                </a>
+
+                <a href="#" class="nav-item" data-page="projects">
+                    <div class="icon-container">
+                        <i class="fas fa-project-diagram"></i>
+                    </div>
+                    <span class="nav-text">项目</span>
+                </a>
+
+                <a href="#" class="nav-item" data-page="friends">
+                    <div class="icon-container">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <span class="nav-text">朋友</span>
+                </a>
+                </div>
+
+                <div class="nav-section">
+                    <div class="section-title">
+                        <i class="fas fa-link"></i>
+                    </div>
+                    
+                <a href="https://github.com/qmwneb946" class="nav-item" target="_blank">
+                    <div class="icon-container">
+                        <i class="fab fa-github"></i>
+                    </div>
+                    <span class="nav-text">GitHub</span>
+                    <i class="fas fa-external-link-alt external-icon"></i>
+                </a>
+
+                <a href="https://x.com/qmwneb946" class="nav-item" target="_blank">
+                    <div class="icon-container">
+                        <i class="fab fa-twitter"></i>
+                    </div>
+                    <span class="nav-text">Twitter</span>
+                    <i class="fas fa-external-link-alt external-icon"></i>
+                </a>
+                </div>
+            </div>
+
         </nav>
 
-         <footer class="site-footer">
-            <p>需要帮助？<a href="https://d.qmwneb946.dpdns.org/contact"  target="_blank" rel="noopener">联系我们</a></p>
-        </footer>
-    </main>
- 
-    <!-- 动态时间脚本 -->
-    <script>
-    function updateLiveTime() {
-        const options = {
-            year: 'numeric',
-            month: '2-digit',
-            day: '2-digit',
-            hour: '2-digit',
-            minute: '2-digit',
-            weekday: 'short',
-            hour12: false 
-        };
-        
-        const formatter = new Intl.DateTimeFormat('zh-CN', options);
-        const liveTimeElement = document.getElementById('liveTime'); 
-        
-        function refreshTime() {
-            const now = new Date();
-            liveTimeElement.textContent  = formatter.format(now) 
-                .replace(/(\d+)\/(\d+)\/(\d+),/, '$3年$1月$2日')
-                .replace('星期', '周');
-        }
-        
-        refreshTime();
-        setInterval(refreshTime, 1000);
-    }
-    updateLiveTime();
-    </script>
+        <!-- 右侧内容区 -->
+        <main class="content">
+            <!-- 搜索框容器 -->
+            <div class="search-container">
+                <div class="search-box">
+                    <input type="text" id="search" placeholder="搜索...">
+                    <i class="fas fa-search"></i>
+                </div>
+            </div>
+
+            <!-- 首页 -->
+            <div class="page active" id="home">
+                
+                <div class="welcome-section">
+                    <h2>Hello,</h2>
+                    <h3>Welcome to My Navigation</h3>
+                    <p class="subtitle">导航菜单</p>
+                </div>
+
+                <section class="category">
+                    <h2><i class="fas fa-star"></i> 常用网站</h2>
+                    <div class="sites-grid">
+                        
+                        <a href="https://linux.do/" class="site-card">
+                            <i class="fab fa-linux"></i>
+                            <h3>Linux.do</h3>
+                            <p>新的理想型社区</p>
+                        </a>
+
+                        <a href="https://www.google.com" class="site-card">
+                            <i class="fab fa-google"></i>
+                            <h3>Google</h3>
+                            <p>全球最大的搜索引擎</p>
+                        </a>
+
+                        <a href="https://www.github.com" class="site-card">
+                            <i class="fab fa-github"></i>
+                            <h3>GitHub</h3>
+                            <p>代码托管平台</p>
+                        </a>
+
+                        <a href="https://stackoverflow.com" class="site-card">
+                            <i class="fab fa-stack-overflow"></i>
+                            <h3>Stack Overflow</h3>
+                            <p>程序员问答社区</p>
+                        </a>
+
+                        <a href="https://chat.openai.com" class="site-card">
+                            <i class="fas fa-robot"></i>
+                            <h3>ChatGPT</h3>
+                            <p>AI智能助手</p>
+                        </a>
+                    </div>
+                </section>
+
+                <section class="category">
+                    <h2><i class="fas fa-graduation-cap"></i> 学习资源</h2>
+                    <div class="sites-grid">
+                        
+                        <a href="https://www.bilibili.com" class="site-card">
+                            <i class="fas fa-play-circle"></i>
+                            <h3>哔哩哔哩</h3>
+                            <p>视频学习平台</p>
+                        </a>
+
+                        <a href="https://www.zhihu.com" class="site-card">
+                            <i class="fas fa-question-circle"></i>
+                            <h3>知乎</h3>
+                            <p>问答社区</p>
+                        </a>
+
+                        <a href="https://juejin.cn" class="site-card">
+                            <i class="fas fa-book"></i>
+                            <h3>掘金</h3>
+                            <p>高质量技术社区</p>
+                        </a>
+
+                        <a href="https://leetcode.cn" class="site-card">
+                            <i class="fas fa-code"></i>
+                            <h3>LeetCode</h3>
+                            <p>算法刷题平台</p>
+                        </a>
+                    </div>
+                </section>
+
+                <section class="category">
+                    <h2><i class="fas fa-tools"></i> 开发工具</h2>
+                    <div class="sites-grid">
+                        
+                        <a href="https://code.visualstudio.com" class="site-card">
+                            <i class="fas fa-code"></i>
+                            <h3>VS Code</h3>
+                            <p>强大的代码编辑器</p>
+                        </a>
+
+                        <a href="https://www.postman.com" class="site-card">
+                            <i class="fas fa-paper-plane"></i>
+                            <h3>Postman</h3>
+                            <p>API调试工具</p>
+                        </a>
+
+                        <a href="https://git-scm.com" class="site-card">
+                            <i class="fab fa-git-alt"></i>
+                            <h3>Git</h3>
+                            <p>版本控制工具</p>
+                        </a>
+
+                        <a href="https://www.docker.com" class="site-card">
+                            <i class="fab fa-docker"></i>
+                            <h3>Docker</h3>
+                            <p>容器化平台</p>
+                        </a>
+                    </div>
+                </section>
+
+                <section class="category">
+                    <h2><i class="fas fa-palette"></i> 设计资源</h2>
+                    <div class="sites-grid">
+                        
+                        <a href="https://www.figma.com" class="site-card">
+                            <i class="fab fa-figma"></i>
+                            <h3>Figma</h3>
+                            <p>在线设计工具</p>
+                        </a>
+
+                        <a href="https://dribbble.com" class="site-card">
+                            <i class="fab fa-dribbble"></i>
+                            <h3>Dribbble</h3>
+                            <p>设计师社区</p>
+                        </a>
+
+                        <a href="https://www.behance.net" class="site-card">
+                            <i class="fab fa-behance"></i>
+                            <h3>Behance</h3>
+                            <p>创意设计平台</p>
+                        </a>
+
+                        <a href="https://www.iconfont.cn" class="site-card">
+                            <i class="fas fa-icons"></i>
+                            <h3>IconFont</h3>
+                            <p>图标资源库</p>
+                        </a>
+                    </div>
+                </section>
+
+                <section class="category">
+                    <h2><i class="fas fa-wrench"></i> 在线工具</h2>
+                    <div class="sites-grid">
+                        
+                        <a href="https://jsoneditoronline.org" class="site-card">
+                            <i class="fas fa-code-branch"></i>
+                            <h3>JSON Editor</h3>
+                            <p>JSON在线编辑器</p>
+                        </a>
+
+                        <a href="https://caniuse.com" class="site-card">
+                            <i class="fas fa-browser"></i>
+                            <h3>Can I Use</h3>
+                            <p>浏览器兼容性查询</p>
+                        </a>
+
+                        <a href="https://tinypng.com" class="site-card">
+                            <i class="fas fa-compress"></i>
+                            <h3>TinyPNG</h3>
+                            <p>图片压缩工具</p>
+                        </a>
+
+                        <a href="https://carbon.now.sh" class="site-card">
+                            <i class="fas fa-code"></i>
+                            <h3>Carbon</h3>
+                            <p>代码图片生成器</p>
+                        </a>
+                    </div>
+                </section>
+            </div>
+
+            <!-- 项目页 -->
+            <div class="page" id="projects">
+                
+                <div class="welcome-section">
+                    <h2>我的项目</h2>
+                    <p class="subtitle">这里展示了我的一些个人项目和开源贡献</p>
+                </div>
+                
+                <section class="category">
+                    <h2><i class="fas fa-code"></i> 个人项目</h2>
+                    <div class="sites-grid">
+                        
+                        <a href="https://fast.qmwneb946.dpdns.org" class="site-card">
+                            <i class="fas fa-bolt"></i>
+                            <h3>文件加速服务</h3>
+                            <p>任意文件 / 网址加速，由 CloudFlare 驱动</p>
+                        </a>
+
+                        <a href="https://greenhublicence.qmwneb946.dpdns.org" class="site-card">
+                            <i class="fas fa-id-card"></i>
+                            <h3>Greenhub 许可证</h3>
+                            <p>Greenhub 许可证，每 5 分钟更新</p>
+                        </a>
+
+                        <a href="https://graph.qmwneb946.dpdns.org" class="site-card">
+                            <i class="fas fa-project-diagram"></i>
+                            <h3>图论编辑器</h3>
+                            <p>Code by anAcc22</p>
+                        </a>
+
+                        <a href="https://github.qmwneb946.dpdns.org" class="site-card">
+                            <i class="fab fa-github"></i>
+                            <h3>GitHub 镜像站</h3>
+                            <p>GitHub 加速</p>
+                        </a>
+
+                        <a href="https://vpn.qmwneb946.dpdns.org" class="site-card">
+                            <i class="fas fa-shield-alt"></i>
+                            <h3>VPN</h3>
+                            <p>安全 VPN 通道</p>
+                        </a>
+
+                        <a href="https://pan.qmwneb946.dpdns.org" class="site-card">
+                            <i class="fas fa-hdd"></i>
+                            <h3>qmwneb 网盘</h3>
+                            <p>存储 + UI</p>
+                        </a>
+
+                        <a href="https://files.qmwneb946.dpdns.org" class="site-card">
+                            <i class="fas fa-download"></i>
+                            <h3>信息奥赛课件源</h3>
+                            <p>仅内网下载</p>
+                        </a>
+
+                        <a href="https://d.qmwneb946.dpdns.org" class="site-card">
+                            <i class="fas fa-comments"></i>
+                            <h3>备忘录 || 讨论</h3>
+                            <p>由 giscus 驱动</p>
+                        </a>
+
+                        <a href="https://daily.qmwneb946.dpdns.org" class="site-card">
+                            <i class="fas fa-chart-line"></i>
+                            <h3>CodeForces 每日提交记录查看</h3>
+                            <p>每日提交记录查看，CodeForces API 支持</p>
+                        </a>
+
+                        <a href="https://pc.qmwneb946.dpdns.org" class="site-card">
+                            <i class="fas fa-laptop"></i>
+                            <h3>美国电脑</h3>
+                            <p>低价美国电脑</p>
+                        </a>
+                    </div>
+                </section>
+            </div>
+
+            <!-- 文章页 -->
+            <div class="page" id="articles">
+                
+                <div class="welcome-section">
+                    <h2>技术文章</h2>
+                    <p class="subtitle">分享我的技术文章和学习笔记</p>
+                </div>
+                
+                <section class="category">
+                    <h2><i class="fas fa-pen"></i> 最新文章</h2>
+                    <div class="sites-grid">
+                        
+                        <a href="#" class="site-card">
+                            <i class="fab fa-vuejs"></i>
+                            <h3>Vue3最佳实践</h3>
+                            <p>Vue3组合式API的使用技巧</p>
+                        </a>
+
+                        <a href="#" class="site-card">
+                            <i class="fab fa-js"></i>
+                            <h3>JavaScript进阶</h3>
+                            <p>JavaScript高级特性解析</p>
+                        </a>
+
+                        <a href="#" class="site-card">
+                            <i class="fab fa-git-alt"></i>
+                            <h3>Git使用技巧</h3>
+                            <p>Git常用命令和工作流</p>
+                        </a>
+
+                        <a href="#" class="site-card">
+                            <i class="fab fa-docker"></i>
+                            <h3>Docker入门</h3>
+                            <p>Docker基础知识和实践</p>
+                        </a>
+                    </div>
+                </section>
+
+                <section class="category">
+                    <h2><i class="fas fa-book"></i> 学习笔记</h2>
+                    <div class="sites-grid">
+                        
+                        <a href="#" class="site-card">
+                            <i class="fab fa-react"></i>
+                            <h3>React Hooks</h3>
+                            <p>React Hooks最佳实践</p>
+                        </a>
+
+                        <a href="#" class="site-card">
+                            <i class="fab fa-node-js"></i>
+                            <h3>Node.js实战</h3>
+                            <p>Node.js服务端开发笔记</p>
+                        </a>
+
+                        <a href="#" class="site-card">
+                            <i class="fab fa-css3"></i>
+                            <h3>CSS技巧</h3>
+                            <p>CSS常用技巧总结</p>
+                        </a>
+
+                        <a href="#" class="site-card">
+                            <i class="fas fa-database"></i>
+                            <h3>数据库设计</h3>
+                            <p>数据库架构和优化笔记</p>
+                        </a>
+                    </div>
+                </section>
+
+                <section class="category">
+                    <h2><i class="fas fa-code"></i> 源码解析</h2>
+                    <div class="sites-grid">
+                        
+                        <a href="#" class="site-card">
+                            <i class="fab fa-vuejs"></i>
+                            <h3>Vue源码解析</h3>
+                            <p>Vue.js核心原理解析</p>
+                        </a>
+
+                        <a href="#" class="site-card">
+                            <i class="fab fa-react"></i>
+                            <h3>React原理</h3>
+                            <p>React核心机制解析</p>
+                        </a>
+                    </div>
+                </section>
+            </div>
+
+            <!-- 朋友页 -->
+            <div class="page" id="friends">
+                
+                <div class="welcome-section">
+                    <h2>友情链接</h2>
+                    <p class="subtitle">优秀的博主和朋友们</p>
+                </div>
+                
+                <section class="category">
+                    <h2><i class="fas fa-laptop-code"></i> 技术社区</h2>
+                    <div class="sites-grid">
+                        
+                        <a href="https://github.com" class="site-card">
+                            <i class="fab fa-github"></i>
+                            <h3>GitHub</h3>
+                            <p>开源代码托管平台</p>
+                        </a>
+
+                        <a href="https://stackoverflow.com" class="site-card">
+                            <i class="fab fa-stack-overflow"></i>
+                            <h3>Stack Overflow</h3>
+                            <p>程序员问答社区</p>
+                        </a>
+
+                        <a href="https://juejin.cn" class="site-card">
+                            <i class="fas fa-book"></i>
+                            <h3>掘金</h3>
+                            <p>高质量技术社区</p>
+                        </a>
+
+                        <a href="https://v2ex.com" class="site-card">
+                            <i class="fas fa-comments"></i>
+                            <h3>V2EX</h3>
+                            <p>创意工作者社区</p>
+                        </a>
+                    </div>
+                </section>
+
+                <section class="category">
+                    <h2><i class="fas fa-coffee"></i> 休闲娱乐</h2>
+                    <div class="sites-grid">
+                        
+                        <a href="https://www.bilibili.com" class="site-card">
+                            <i class="fas fa-play-circle"></i>
+                            <h3>哔哩哔哩</h3>
+                            <p>视频弹幕网站</p>
+                        </a>
+
+                        <a href="https://www.zhihu.com" class="site-card">
+                            <i class="fas fa-question-circle"></i>
+                            <h3>知乎</h3>
+                            <p>问答社区</p>
+                        </a>
+
+                        <a href="https://www.douban.com" class="site-card">
+                            <i class="fas fa-film"></i>
+                            <h3>豆瓣</h3>
+                            <p>文艺生活社区</p>
+                        </a>
+
+                        <a href="https://music.163.com" class="site-card">
+                            <i class="fas fa-music"></i>
+                            <h3>网易云音乐</h3>
+                            <p>音乐平台</p>
+                        </a>
+                    </div>
+                </section>
+            </div>
+            
+            
+            <!-- 搜索结果页 -->
+            <div class="page" id="search-results">
+                <div class="welcome-section">
+                    <h2>搜索结果</h2>
+                    <p class="subtitle">在所有页面中找到的匹配项</p>
+                </div>
+
+                <section class="category search-section" data-section="home" style="display: none;">
+                    <h2><i class="fas fa-home"></i> 首页匹配项</h2>
+                    <div class="sites-grid"></div>
+                </section>
+
+                <section class="category search-section" data-section="projects" style="display: none;">
+                    <h2><i class="fas fa-project-diagram"></i> 项目匹配项</h2>
+                    <div class="sites-grid"></div>
+                </section>
+
+                <section class="category search-section" data-section="friends" style="display: none;">
+                    <h2><i class="fas fa-users"></i> 朋友匹配项</h2>
+                    <div class="sites-grid"></div>
+                </section>
+            </div>
+        </main>
+    </div>
+    <script src="script.js"></script>
 </body>
 </html>
